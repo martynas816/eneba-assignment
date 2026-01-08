@@ -132,6 +132,12 @@ export default function App() {
           ))}
         </div>
       </main>
+      <a
+        className="reportBtn"
+        href="#"
+      >
+        Report a problem
+      </a>
     </div>
   );
 }

@@ -226,6 +226,34 @@ body{
   letter-spacing: .3px;
 }
 
+.reportBtn{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+  color: rgba(242, 239, 255, 0.85);
+
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-decoration: none;
+
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.reportBtn:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.28);
+  color: var(--text);
+}
+
+
 
 .priceRow { display: flex; gap: 8px; align-items: baseline; }
 
