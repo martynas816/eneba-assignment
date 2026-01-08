@@ -134,7 +134,6 @@ export default function App() {
       </main>
       <a
         className="reportBtn"
-        href="#"
       >
         Report a problem
       </a>
