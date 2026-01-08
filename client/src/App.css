@@ -1,11 +1,3 @@
-/* Vite template override: remove any #root max-width/padding that makes layout look left-shifted */
-#root{
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-}
-
 :root {
   --bg: #2d1a63;
   --bg2: #23124f;
@@ -15,6 +7,14 @@
   --stroke: rgba(242, 239, 255, 0.12);
   --pill: rgba(76, 255, 203, 0.12);
   --container: 1240px;
+}
+
+/* Vite template override: remove any #root max-width/padding that makes layout look left-shifted */
+#root{
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
 * { box-sizing: border-box; }

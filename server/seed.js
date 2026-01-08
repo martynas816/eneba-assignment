@@ -10,7 +10,6 @@ export function seedIfEmpty() {
   `);
 
   const rows = [
-    // REQUIRED BY ASSIGNMENT
     {
       title: "FIFA 23",
       platform: "PS5",
@@ -41,8 +40,6 @@ export function seedIfEmpty() {
       cashbackEur: 3.87,
       likes: 1039,
     },
-
-    // Extra so grid looks real
     {
       title: "Split Fiction",
       platform: "Nintendo Switch 2 eShop",
