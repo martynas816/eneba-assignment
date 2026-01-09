@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 
 import { db, initDb } from "./db.js";
 import { seedIfEmpty } from "./seed.js";
+import Fuse from "fuse.js";
 
 const app = express();
 app.use(cors());
@@ -24,21 +25,37 @@ function buildSearchWhere(searchRaw) {
   return { where: `WHERE ${clauses.join(" AND ")}`, params };
 }
 
-app.get("/list", (req, res) => {
-  const { where, params } = buildSearchWhere(req.query.search);
+const selectAll = db.prepare(`
+  SELECT id, title, platform, region, imageUrl, priceEur, oldPriceEur, cashbackEur, likes
+  FROM games
+`);
 
-  const rows = db
-    .prepare(
-      `
+app.get("/list", (req, res) => {
+  const search = (req.query.search || "").trim();
+
+  // no search: keep your normal sort
+  if (!search) {
+    const rows = db.prepare(`
       SELECT id, title, platform, region, imageUrl, priceEur, oldPriceEur, cashbackEur, likes
       FROM games
-      ${where}
       ORDER BY likes DESC, priceEur ASC
-    `
-    )
-    .all(params);
+    `).all();
+    return res.json({ count: rows.length, items: rows });
+  }
 
-  res.json({ count: rows.length, items: rows });
+  // fuzzy search
+  const rows = selectAll.all();
+  const fuse = new Fuse(rows, {
+    keys: ["title"],
+    threshold: 0.35,        // lower = stricter, higher = fuzzier
+    ignoreLocation: true,
+    minMatchCharLength: 2,
+  });
+
+  const results = fuse.search(search);
+  const items = results.map(r => r.item);
+
+  res.json({ count: items.length, items });
 });
 
 // ---------- Serve the React build (only if it exists) ----------
